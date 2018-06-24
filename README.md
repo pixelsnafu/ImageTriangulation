@@ -16,3 +16,4 @@ python3 ImageTriangulation.py <input_file_path>
 # Example
 
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/fluff.jpg" width=665 height=442 />
+![](./ImageTriangulation/fluff-1552-0.png?raw=true)
