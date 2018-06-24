@@ -9,3 +9,10 @@ Following external dependencies are required to run the script:
 - Pandas
 
 All other imports should be a part of Python 3's internal library suite. 
+
+# Usage
+python3 ImageTriangulation.py <input_file_path>
+
+# Example
+! [Original] (https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/fluff.jpg)
+! [Tessellated] (https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/fluff-982-0.png)
