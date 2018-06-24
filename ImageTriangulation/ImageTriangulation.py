@@ -252,11 +252,11 @@ if __name__ == '__main__':
 
     image = plt.imread(sys.argv[1])
     imageHeight, imageWidth = image.shape[:2]
-    minDist = 18
+    minDist = 25
     grid = Grid(minDist, imageWidth, imageHeight)
 
     my_dpi=100
-    imageCount = 60
+    imageCount = 1
 
     for i in range(imageCount):
 
@@ -298,6 +298,6 @@ if __name__ == '__main__':
         
             fig.set_size_inches(float(imageWidth)/my_dpi, float(imageHeight)/my_dpi)
 
-            outfile_name = 'output-' + str(i) + '.png'
+            outfile_name = sys.argv[1].split('.')[0] + '-' + str(tris.simplices.shape[0]) + '-' + str(i) + '.png'
             fig.savefig(outfile_name, bbox_inches='tight', pad_inches=0, transparent=True, dpi=my_dpi)
     
