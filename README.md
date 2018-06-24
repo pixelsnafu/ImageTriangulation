@@ -23,3 +23,5 @@ python3 ImageTriangulation.py <input_file_path>
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/kitten-1124-0.png" width=627 height=341 />
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/earth.jpg" width=613 height=472 />
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/earth-18210-0.png" width=613 height=472 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/cornell.jpg" width=565 height=561 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/cornell-250-2.png" width=565 height=561 />
