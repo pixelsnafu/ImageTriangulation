@@ -15,5 +15,5 @@ python3 ImageTriangulation.py <input_file_path>
 
 # Example
 
-![alt text](./ImageTriangulation/fluff.jpg?raw=True =512x512 "Original")
+![](./ImageTriangulation/fluff.jpg?raw=True | width = 665)
 ![alt text](./ImageTriangulation/fluff-1552-0.png?raw=True =512x512 "Tessellated")
