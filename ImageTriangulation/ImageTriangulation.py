@@ -252,11 +252,11 @@ if __name__ == '__main__':
 
     image = plt.imread(sys.argv[1])
     imageHeight, imageWidth = image.shape[:2]
-    minDist = 25
+    minDist = 50
     grid = Grid(minDist, imageWidth, imageHeight)
 
     my_dpi=100
-    imageCount = 1
+    imageCount = 5
 
     for i in range(imageCount):
 
