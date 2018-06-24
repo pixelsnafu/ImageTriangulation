@@ -15,4 +15,5 @@ python3 ImageTriangulation.py <input_file_path>
 
 # Example
 
-![alt text](./ImageTriangulation/fluff.jpg "Description goes here")
+![alt text](./ImageTriangulation/fluff.jpg?raw=True "Original")
+![alt text](./ImageTriangulation/fluff-982-0.png?raw=True "Tessellated")
