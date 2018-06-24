@@ -15,4 +15,4 @@ python3 ImageTriangulation.py <input_file_path>
 
 # Example
 
-![alt text](./fluff.jpg "Description goes here")
+![alt text](./ImageTriangulation/fluff.jpg "Description goes here")
