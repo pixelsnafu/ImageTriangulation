@@ -19,3 +19,5 @@ python3 ImageTriangulation.py <input_file_path>
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/fluff-1552-0.png" width=665 height=442 />
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/monalisa.jpg" width=627 height=924 />
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/monalisa-1982-0.png" width=627 height=924 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/kitten.jpg" width=627 height=341 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/kitten-1124-0.png" width=627 height=341 />
