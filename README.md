@@ -14,6 +14,9 @@ All other imports should be a part of Python 3's internal library suite.
 python3 ImageTriangulation.py <input_file_path> <min_dist_between_points>
 
 # Example
+python3 ImageTriangulation.py cornell.jpg 25
+
+# Output Images
 
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/fluff.jpg" width=665 height=442 />
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/fluff_990_0.png" width=665 height=442 />
