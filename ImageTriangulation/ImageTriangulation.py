@@ -1,4 +1,4 @@
-import functools, math, random, sys, time, warnings
+import cv2, functools, math, random, sys, time, warnings
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 import numpy as np
@@ -70,7 +70,7 @@ class Grid:
     are in the image space or the grid space. If gridSpace = False, the point coordinates are first
     converted to gridspace from imagespace before returning the calculated grid index. 
     '''
-    def getGridIndex(self, x, y, gridSpace = False):
+    def getIndex(self, x, y, gridSpace = False):
         if not gridSpace:
             x, y = list(self.getGridCoordinates(Point(x, y)))
         return y * self.width + x
@@ -79,14 +79,14 @@ class Grid:
     def insert(self, point):
         #gridCoords = self.getGridCoordinates(point)
         #self.grid[gridCoords.y * self.width + gridCoords.x] = point
-        self.grid[self.getGridIndex(point.x, point.y)] = point
+        self.grid[self.getIndex(point.x, point.y)] = point
 
     def checkInNeighborhood(self, point):
         gridCoords = self.getGridCoordinates(point)
         radius = 2
         for y in range(gridCoords.y - radius, gridCoords.y + radius):
             for x in range(gridCoords.x - radius, gridCoords.x + radius):
-                index = self.getGridIndex(x, y, True)
+                index = self.getIndex(x, y, True)
                 if index in range(0, len(self.grid)):
                     neighbor = self.grid[index]
                     if neighbor and point.distance(neighbor) < self.minDist:
@@ -188,13 +188,37 @@ class BlueNoiseGenerator:
                     self.grid.insert(newPoint)
                     found = True
 
-        self.generateBoundary()
-
         if DEBUG:
-            x, y = zip(*self.sampledList)
-            plt.scatter(x, y, color='yellow',marker=',',lw=0, s=1)
-            plt.imshow(self.imageWeight, cmap='gray')
-            plt.show()
+            im_info = Image.open(sys.argv[1]).info
+            if 'dpi' in im_info:
+                my_dpi = im_info['dpi'][0]
+            else:
+                my_dpi = 60
+            figSize = self.imageWidth / my_dpi, self.imageHeight / my_dpi
+            fig = plt.figure(figsize=figSize, dpi=my_dpi)
+            ax = plt.Axes(fig, [0., 0., 1., 1.])
+            ax.set_axis_off()
+            fig.add_axes(ax)
+            ax.plot(*zip(*self.sampledList), color='black',marker=',',lw=0, linestyle="")
+            extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+            fig.savefig(('%d_points_weighted_blue_noise.png' % len(self.sampledList)), bbox_inches=extent.expanded(0.9, 0.9), pad_inches=0, dpi=my_dpi)
+
+            ax.clear()
+            ax.plot(*zip(*self.sampledList), color='yellow',marker=',',lw=0, linestyle="")
+            ax.imshow(self.imageWeight, cmap='gray')
+            fig.savefig(('%d_points_weighted_blue_noise_filter.png' % len(self.sampledList)), bbox_inches=extent.expanded(0.9, 0.9), pad_inches=0, dpi=my_dpi)
+
+            img = cv2.imread(('%d_points_weighted_blue_noise.png' % len(self.sampledList)),0)
+            img2 = img
+            f = np.fft.fft2(img)
+            fshift = np.fft.fftshift(f)
+            magnitude_spectrum = np.log(np.abs(fshift))
+
+            ax.clear()
+            ax.imshow(magnitude_spectrum, cmap='gray')
+            fig.savefig(('%d_points_weighted_blue_noise_dft.png' % len(self.sampledList)), bbox_inches=extent.expanded(0.9, 0.9), pad_inches=0, dpi=my_dpi)
+        
+        self.generateBoundary()
 
         return self.sampledList
 
@@ -218,6 +242,31 @@ class BlueNoiseGenerator:
                     self.sampledList.append(list(newPoint))
                     self.grid.insert(newPoint)
                     continue
+
+        if DEBUG:
+            im_info = Image.open(sys.argv[1]).info
+            if 'dpi' in im_info:
+                my_dpi = im_info['dpi'][0]
+            else:
+                my_dpi = 60
+            figSize = self.imageWidth / my_dpi, self.imageHeight / my_dpi
+            fig = plt.figure(figsize=figSize, dpi=my_dpi)
+            ax = plt.Axes(fig, [0., 0., 1., 1.])
+            ax.set_axis_off()
+            fig.add_axes(ax)
+            ax.plot(*zip(*self.sampledList), color='black',marker=',',lw=0, linestyle="")
+            extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+            fig.savefig(('%d_points_blue_noise.png' % len(self.sampledList)), bbox_inches=extent.expanded(0.9, 0.9), pad_inches=0, dpi=my_dpi)
+
+            img = cv2.imread(('%d_points_blue_noise.png' % len(self.sampledList)),0)
+            img2 = img
+            f = np.fft.fft2(img)
+            fshift = np.fft.fftshift(f)
+            magnitude_spectrum = np.log(np.abs(fshift))
+
+            ax.clear()
+            ax.imshow(magnitude_spectrum, cmap='gray')
+            fig.savefig(('%d_points_blue_noise_dft.png' % len(self.sampledList)), bbox_inches=extent.expanded(0.9, 0.9), pad_inches=0, dpi=my_dpi)
 
         self.generateBoundary()
 
@@ -244,7 +293,10 @@ def calculateTriColors(image, triangulation, aggregateFunc=np.mean):
     return triangleColors.values / 256
     
 if __name__ == '__main__':
-
+    
+    if (len(sys.argv) < 3):
+        print ("usage: python3 ImageTriangulation.py <input_file_path> <min_dist_between_samples>")
+    
     warnings.filterwarnings("ignore")
     currentMilliseconds = lambda: int(round(time.time() * 1000))
 
@@ -252,11 +304,10 @@ if __name__ == '__main__':
 
     image = plt.imread(sys.argv[1])
     imageHeight, imageWidth = image.shape[:2]
-    minDist = 50
+    minDist = int(sys.argv[2])
     grid = Grid(minDist, imageWidth, imageHeight)
 
-    my_dpi=100
-    imageCount = 5
+    imageCount = 1
 
     for i in range(imageCount):
 
@@ -282,22 +333,28 @@ if __name__ == '__main__':
             print ("Colorized triangles in %f seconds" % ((end - start)/1000.0))
 
             print ("Saving image...")  
-        
-            fig, ax = plt.subplots()
+            
+            im_info = Image.open(sys.argv[1]).info
+            if 'dpi' in im_info:
+                my_dpi = im_info['dpi'][0]
+            else:
+                my_dpi = 60
+
+            print ('dpi: %d' % my_dpi)
+            
+            figSize = imageWidth / my_dpi, imageHeight / my_dpi
+            fig = plt.figure(figsize=figSize, dpi=my_dpi)
+            ax = fig.add_axes([0., 0., 1., 1.])
             ax.invert_yaxis()
-        
             for triangle, eColor, fColor in zip(tris.simplices, triColors, triColors):
                 p = Polygon([tris.points[i] for i in triangle], closed=True, facecolor=fColor, edgecolor=eColor)
                 ax.add_patch(p)
-        
-            # remove boundary
-            ax.axis("tight")
+            ax.axis('tight')
             ax.set_axis_off()
             ax.get_xaxis().set_visible(False)
             ax.get_yaxis().set_visible(False)
-        
-            fig.set_size_inches(float(imageWidth)/my_dpi, float(imageHeight)/my_dpi)
 
-            outfile_name = sys.argv[1].split('.')[0] + '-' + str(tris.simplices.shape[0]) + '-' + str(i) + '.png'
-            fig.savefig(outfile_name, bbox_inches='tight', pad_inches=0, transparent=True, dpi=my_dpi)
-    
+            outfile_name = "%s_%s_%s.png" % (sys.argv[1].split('.')[0], str(tris.simplices.shape[0]), str(i))
+            extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+            fig.savefig(outfile_name, bbox_inches=extent.expanded(0.9, 0.9), pad_inches=0, dpi=my_dpi)
+            
