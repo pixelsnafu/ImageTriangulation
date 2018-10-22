@@ -28,3 +28,7 @@ python3 ImageTriangulation.py cornell.jpg 25
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/earth_2824_0.png" width=613 height=472 />
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/cornell.jpg" width=565 height=561 />
 <img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/cornell_742_0.png" width=565 height=561 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/scream.jpg" width=803 height=1024 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/scream_4896_0.png" width=803 height=1024 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/starry.jpg" width=799 height=633 />
+<img src="https://raw.githubusercontent.com/pxv8270/ImageTriangulation/master/ImageTriangulation/starry_1014_0.png" width=799 height=633 />
