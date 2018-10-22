@@ -11,7 +11,7 @@ Following external dependencies are required to run the script:
 All other imports should be a part of Python 3's internal library suite. 
 
 # Usage
-python3 ImageTriangulation.py <input_file_path>
+python3 ImageTriangulation.py <input_file_path> <min_dist_between_points>
 
 # Example
 
